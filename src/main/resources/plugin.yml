@@ -13,7 +13,7 @@ commands:
 permissions:
   exile.admin:
     description: User may approve exiling other users and instant-exile requests
-    default: false
+    default: op
   exile.use:
     description: User may request for another user to be exiled
     default: true
