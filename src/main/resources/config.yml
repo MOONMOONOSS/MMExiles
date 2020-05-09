@@ -1,0 +1,13 @@
+exile:
+  target:
+    x: 0
+    y: 128
+    z: 0
+    world: world
+
+# Whether or not you want the whole server to see that someone has been exiled
+broadcast.exile: true
+
+# Whether or not the exiled player should know who exiled them
+exile.knows.exiler: true
+

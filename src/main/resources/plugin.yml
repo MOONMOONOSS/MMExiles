@@ -1,0 +1,19 @@
+name: MMExiles
+version: ${project.version}
+main: io.github.war501head.mmexiles.MMExiles
+api-version: 1.15
+authors: [501warhead]
+description: Allows Exiling of (Un)willing Participants
+
+commands:
+  exile:
+    usage: /exile <username> <reason>
+    permission: exile.use
+
+permissions:
+  exile.admin:
+    description: User may approve exiling other users and instant-exile requests
+    default: false
+  exile.use:
+    description: User may request for another user to be exiled
+    default: true
