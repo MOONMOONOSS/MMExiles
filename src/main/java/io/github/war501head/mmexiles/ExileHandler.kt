@@ -25,6 +25,7 @@
 package io.github.war501head.mmexiles
 
 // We do this because for some reason they share the same class file name. IDK. Whatever, we just rename it.
+import co.aikar.commands.InvalidCommandArgument
 import net.md_5.bungee.api.chat.*
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor.*
@@ -38,7 +39,7 @@ import kotlin.math.max
 import kotlin.math.min
 import net.md_5.bungee.api.ChatColor as MD5Color
 
-class ExileHandler(val exileLocation: ExileLocation) {
+class ExileHandler {
 
     data class ExileRequest(val exiler: UUID, val exile: UUID, val reason: String)
 
@@ -102,7 +103,9 @@ class ExileHandler(val exileLocation: ExileLocation) {
     }
 
     fun doExile(exile: Player, exiler: String?, reason: String) {
-        exile.teleport(exileLocation.toLocation())
+        val exileLocation = MMExilesConfig.exileLocation?.toLocation()
+                ?: throw InvalidCommandArgument("Exile location was not configured properly. Use /exile location to set this up")
+        exile.teleport(exileLocation)
         if (MMExilesConfig.exileKnowsExiler) {
             exile.sendMessage("${RED}You have been exiled! Your accuser, $exiler, reported you for $RESET$GRAY$reason")
         } else {
