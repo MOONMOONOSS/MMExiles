@@ -108,14 +108,14 @@ class ExileCommand(private val handler: ExileHandler) : BaseCommand() {
             if (commandSender is ConsoleCommandSender) {
                 exileList.forEach { (exileButtons, exileReason) ->
                     commandSender.sendMessage(TextComponent(*exileButtons).toPlainText())
-                    commandSender.sendMessage(exileReason)
+                    commandSender.sendMessage("$GRAY$ITALIC$exileReason")
                 }
                 return
             }
             // We need the * as a spread operator so that this method will take what we're giving it
             exileList.forEach { (exileButtons, exileReason) ->
                 commandSender.spigot().sendMessage(*exileButtons)
-                commandSender.sendMessage(exileReason)
+                commandSender.sendMessage("$GRAY$ITALIC$exileReason")
             }
         }
         commandSender.spigot().sendMessage(*buildPaginationBottom(page, maxPages))

@@ -218,7 +218,7 @@ class ExileHandler(val exileLocation: ExileLocation) {
             pardonButton.isBold = true
             pardonButton.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder(TextComponent("Click to pardon")).create())
             pardonButton.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/exile reject ${exile.name}")
-            component.append(pardonButton).append("\n").reset().retain(ComponentBuilder.FormatRetention.NONE)
+            component.append(pardonButton)
             components[component.create()] = request.reason
         }
         return components
