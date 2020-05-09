@@ -97,6 +97,7 @@ class ExileHandler(val exileLocation: ExileLocation) {
         val exileRequest: ExileRequest = exileRequests.first { exileRequest -> exileRequest.exile == exile.uniqueId }
         val exiler = Bukkit.getOfflinePlayer(exileRequest.exiler)
         exiler.player?.sendMessage("${RED}Your request to exile ${exile.displayName} $GRAY(${exile.name})$RESET$RED has been rejected!")
+        exileRequests = exileRequests - exileRequest
         return Status.SUCCESS
     }
 
