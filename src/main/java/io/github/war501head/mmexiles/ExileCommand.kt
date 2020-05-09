@@ -71,6 +71,8 @@ class ExileCommand(private val handler: ExileHandler) : BaseCommand() {
                 ExileHandler.Status.NOT_FOUND -> throw InvalidCommandArgument("No pending request to exile ${player.player.name} was found")
                 else -> throw InvalidCommandArgument("An unknown error happened. Try again.")
             }
+        } else {
+            commandSender.sendMessage("${RED}You have exiled ${player.player.name}! May fate be kind to their poor soul...")
         }
 
     }
@@ -85,6 +87,8 @@ class ExileCommand(private val handler: ExileHandler) : BaseCommand() {
                 ExileHandler.Status.NOT_FOUND -> throw InvalidCommandArgument("No pending request to exile ${player.player.name} was found")
                 else -> throw InvalidCommandArgument("An unknown error happened. Try again.")
             }
+        } else {
+            commandSender.sendMessage("${AQUA}You have rejected the request to exile ${player.player.name}! Very gracious, M'lord.")
         }
     }
 
