@@ -38,7 +38,7 @@ class MMExiles : JavaPlugin() {
         MMExilesConfig.loadConfig()
         val manager = PaperCommandManager(this)
         manager.enableUnstableAPI("help")
-        exileHandler = MMExilesConfig.exileLocation?.let { ExileHandler(it) }
+        exileHandler = ExileHandler()
         manager.registerCommand(ExileCommand(exileHandler!!))
     }
 
