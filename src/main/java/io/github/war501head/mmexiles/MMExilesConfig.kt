@@ -24,6 +24,7 @@
 
 package io.github.war501head.mmexiles
 
+import org.bukkit.Bukkit
 import org.bukkit.configuration.InvalidConfigurationException
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
@@ -41,11 +42,17 @@ object MMExilesConfig {
         private set
     var broadcastMessages: List<String> = emptyList()
         private set
+    var remindersEnabled = true
+        private set
+    var reminderFrequency = 15
+        private set
+    val exileHandler: ExileHandler = ExileHandler()
+
+    private var reminderTaskId: Int = 0
 
     fun loadConfig() {
         plugin!!.reloadConfig()
         val config = plugin!!.config
-        // TODO actually make a meaningful error message if this garbage fails. Spigot <3 Bandaids and terrible code!
         val exileLocationFile = File(plugin!!.dataFolder, "exile_location.yml")
         if (!exileLocationFile.exists()) {
             plugin!!.saveResource("exile_location.yml", false)
@@ -61,6 +68,8 @@ object MMExilesConfig {
         exileKnowsExiler = config.getBoolean("exile.knows.exiler")
         broadcastExileMessage = config.getBoolean("broadcast.enabled")
         broadcastMessages = config.getStringList("broadcast.messages")
+        remindersEnabled = config.getBoolean("reminder.enabled")
+        reminderFrequency = config.getInt("reminder.frequency")
     }
 
     fun setExileLocation(x: Int, y: Int, z: Int, world: String) {
@@ -73,4 +82,17 @@ object MMExilesConfig {
         exileLocationConfig.save(locationConfigFile)
         exileLocation = ExileLocation(x, y, z, world)
     }
+
+    fun runTask() {
+        if (remindersEnabled) {
+            reminderTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin!!, {
+                exileHandler.notifyPendingExiles()
+            } as Runnable, 20 * 60 * 5, (20 * 60 * reminderFrequency).toLong())
+        } else if (reminderTaskId != 0) {
+            // Cancel a task if it's already running
+            Bukkit.getScheduler().cancelTask(reminderTaskId)
+        }
+    }
+
+
 }

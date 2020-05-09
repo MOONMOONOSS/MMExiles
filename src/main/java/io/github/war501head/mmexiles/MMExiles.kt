@@ -29,8 +29,6 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class MMExiles : JavaPlugin() {
 
-    private var exileHandler: ExileHandler? = null
-
     override fun onEnable() {
         // Plugin startup logic
         saveDefaultConfig()
@@ -38,8 +36,8 @@ class MMExiles : JavaPlugin() {
         MMExilesConfig.loadConfig()
         val manager = PaperCommandManager(this)
         manager.enableUnstableAPI("help")
-        exileHandler = ExileHandler()
-        manager.registerCommand(ExileCommand(exileHandler!!))
+        manager.registerCommand(ExileCommand(MMExilesConfig.exileHandler))
+
     }
 
     override fun onDisable() {
