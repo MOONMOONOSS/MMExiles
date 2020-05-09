@@ -100,9 +100,8 @@ class ExileCommand(private val handler: ExileHandler) : BaseCommand() {
             throw InvalidCommandArgument("Page $page is larger than the total pages, which is $maxPages")
         }
         val exileList: Map<Array<BaseComponent>, String> = handler.buildExileList(page - 1)
-        //val exileList: Array<BaseComponent> = handler.buildExileList(page - 1)
         commandSender.sendMessage("$RED.:: $BOLD PENDING MAGISTRATIVE REVIEW$RESET$RED ::.")
-        if (/*handler.exileRequests.isEmpty()*/ false) {
+        if (handler.exileRequests.isEmpty()) {
             commandSender.sendMessage("${GRAY}There are no pending requests M'lord, check back later perhaps?")
         } else {
             if (commandSender is ConsoleCommandSender) {

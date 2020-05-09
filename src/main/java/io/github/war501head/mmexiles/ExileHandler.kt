@@ -128,69 +128,13 @@ class ExileHandler(val exileLocation: ExileLocation) {
     }
 
     fun buildExileList(page: Int): Map<Array<BaseComponent>, String> {
-        if (/*exileRequests.isEmpty()*/false) {
+        if (exileRequests.isEmpty()) {
             return emptyMap()
         }
-        val dummyExileRequests: List<ExileRequest> = listOf(
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep"),
-                ExileRequest(UUID.fromString("0c4846c1-975f-493b-b931-91d725125e0f"), UUID.fromString("2b8176ac-89fc-47c8-99a5-4ed206380c2b"), "Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep Baa Baa Black Sheep")
-        )
         val components = mutableMapOf<Array<BaseComponent>, String>()
-        val componentBuilder = ComponentBuilder()
         // Pagination algorithm
         val offset = page * 3
-        //exileRequests.slice(offset..min(offset+2, exileRequests.size-1)).forEach { request ->
-        dummyExileRequests.slice(offset..min(offset + 2, dummyExileRequests.size - 1)).forEach { request ->
+        exileRequests.slice(offset..min(offset + 2, exileRequests.size - 1)).forEach { request ->
             val exile = Bukkit.getOfflinePlayer(request.exile)
             val exiler = Bukkit.getOfflinePlayer(request.exiler)
             val component = ComponentBuilder()
