@@ -114,6 +114,14 @@ class ExileHandler {
         if (MMExilesConfig.broadcastExileMessage) {
             Bukkit.broadcastMessage(getBroadcastMessage(exile, reason))
         }
+        var team = Bukkit.getScoreboardManager()?.mainScoreboard?.getTeam("exiled")
+        if (team == null) {
+            team = Bukkit.getScoreboardManager()?.mainScoreboard?.registerNewTeam("exiled")
+                    ?: throw InvalidCommandArgument("Failed to find or register the team Exiled. Probably needs an OP (Dunkel) to fix")
+            team.color = GOLD
+            team.suffix = "$GOLD the Exiled"
+        }
+        team.addEntry(exile.name)
     }
 
     fun setExileLocation(loc: Location) {
