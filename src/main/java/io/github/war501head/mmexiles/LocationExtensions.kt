@@ -24,29 +24,10 @@
 
 package io.github.war501head.mmexiles
 
-import co.aikar.commands.PaperCommandManager
-import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.Location
 
-class MMExiles : JavaPlugin() {
-
-    private var exileHandler: ExileHandler? = null
-
-    override fun onEnable() {
-        // Plugin startup logic
-        saveDefaultConfig()
-        MMExilesConfig.plugin = this
-        MMExilesConfig.loadConfig()
-        val manager = PaperCommandManager(this)
-        manager.enableUnstableAPI("help")
-        exileHandler = MMExilesConfig.exileLocation?.let { ExileHandler(it) }
-        manager.registerCommand(ExileCommand(exileHandler!!))
-    }
-
-    override fun onDisable() {
-        // Plugin shutdown logic
-    }
-
-    override fun onLoad() {
-        MMExilesConfig.plugin = this
-    }
+// This is the reason I love kotlin and spigot/bukkit/whatever minecraft
+// When you won't give me the methods I want ILL MAKE THEM MYSELF
+fun Location.toPrettyString(): String {
+    return "X: $blockX Y: $blockY Z: $blockZ"
 }

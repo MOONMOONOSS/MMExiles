@@ -24,8 +24,9 @@
 
 package io.github.war501head.mmexiles
 
-import io.github.war501head.mmexiles.domain.ExileLocation
 import org.bukkit.configuration.InvalidConfigurationException
+import org.bukkit.configuration.file.YamlConfiguration
+import java.io.File
 
 object MMExilesConfig {
 
@@ -38,15 +39,38 @@ object MMExilesConfig {
         private set
     var broadcastExileMessage = true
         private set
+    var broadcastMessages: List<String> = emptyList()
+        private set
 
     fun loadConfig() {
+        plugin!!.reloadConfig()
         val config = plugin!!.config
-        val x = config.getInt("exile.target.x")
-        val y = config.getInt("exile.target.y")
+        // TODO actually make a meaningful error message if this garbage fails. Spigot <3 Bandaids and terrible code!
+        val exileLocationFile = File(plugin!!.dataFolder, "exile_location.yml")
+        if (!exileLocationFile.exists()) {
+            plugin!!.saveResource("exile_location.yml", false)
+        }
+        val exileLocationConfig = YamlConfiguration.loadConfiguration(exileLocationFile)
+        val y = exileLocationConfig.getInt("y")
         if (!(0..256).contains(y)) throw InvalidConfigurationException("The y coordinate for the exile location must be between 0 and 256. Specified: $y")
-        val z = config.getInt("exile.target.z")
-        val world = config.getString("exile.target.world")
+        val x = exileLocationConfig.getInt("x")
+        val z = exileLocationConfig.getInt("z")
+        val world = exileLocationConfig.getString("world")
                 ?: throw InvalidConfigurationException("Please specify a world to use for the exile location")
+        exileLocation = ExileLocation(x, y, z, world)
+        exileKnowsExiler = config.getBoolean("exile.knows.exiler")
+        broadcastExileMessage = config.getBoolean("broadcast.enabled")
+        broadcastMessages = config.getStringList("broadcast.messages")
+    }
+
+    fun setExileLocation(x: Int, y: Int, z: Int, world: String) {
+        val locationConfigFile = File(plugin!!.dataFolder, "exile_location.yml")
+        val exileLocationConfig = YamlConfiguration.loadConfiguration(locationConfigFile)
+        exileLocationConfig.set("x", x)
+        exileLocationConfig.set("y", y)
+        exileLocationConfig.set("z", z)
+        exileLocationConfig.set("world", world)
+        exileLocationConfig.save(locationConfigFile)
         exileLocation = ExileLocation(x, y, z, world)
     }
 }

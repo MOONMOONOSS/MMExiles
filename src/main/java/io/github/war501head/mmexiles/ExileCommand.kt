@@ -22,15 +22,13 @@
  * SOFTWARE.
  */
 
-package io.github.war501head.mmexiles.command
+package io.github.war501head.mmexiles
 
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.CommandHelp
 import co.aikar.commands.InvalidCommandArgument
 import co.aikar.commands.annotation.*
 import co.aikar.commands.bukkit.contexts.OnlinePlayer
-import io.github.war501head.mmexiles.MMExilesConfig
-import io.github.war501head.mmexiles.handler.ExileHandler
 import net.md_5.bungee.api.chat.*
 import org.bukkit.ChatColor.*
 import org.bukkit.command.CommandSender
@@ -94,28 +92,33 @@ class ExileCommand(private val handler: ExileHandler) : BaseCommand() {
     @CommandPermission("exile.admin")
     @Description("Lists all exile requests and gives action buttons")
     fun listPendingExiles(commandSender: CommandSender, @Default("1") page: Int) {
-        if (page < 0) {
-            throw InvalidCommandArgument("Page value ($page) cannot be negative")
+        if (page < 1) {
+            throw InvalidCommandArgument("Page value ($page) cannot be negative or zero")
         }
         val maxPages = handler.getMaxPages()
         if (page > maxPages) {
             throw InvalidCommandArgument("Page $page is larger than the total pages, which is $maxPages")
         }
-        val exileList: Array<BaseComponent> = handler.buildExileList(page - 1)
-        commandSender.sendMessage("$RED .:: $BOLD PENDING MAGISTRATIVE REVIEW$RESET$RED ::.")
-        if (handler.exileRequests.isEmpty()) {
+        val exileList: Map<Array<BaseComponent>, String> = handler.buildExileList(page - 1)
+        //val exileList: Array<BaseComponent> = handler.buildExileList(page - 1)
+        commandSender.sendMessage("$RED.:: $BOLD PENDING MAGISTRATIVE REVIEW$RESET$RED ::.")
+        if (/*handler.exileRequests.isEmpty()*/ false) {
             commandSender.sendMessage("${GRAY}There are no pending requests M'lord, check back later perhaps?")
         } else {
             if (commandSender is ConsoleCommandSender) {
-                commandSender.sendMessage(TextComponent(*exileList).toPlainText())
+                exileList.forEach { (exileButtons, exileReason) ->
+                    commandSender.sendMessage(TextComponent(*exileButtons).toPlainText())
+                    commandSender.sendMessage(exileReason)
+                }
                 return
             }
             // We need the * as a spread operator so that this method will take what we're giving it
-            commandSender.spigot().sendMessage(*exileList)
+            exileList.forEach { (exileButtons, exileReason) ->
+                commandSender.spigot().sendMessage(*exileButtons)
+                commandSender.sendMessage(exileReason)
+            }
         }
         commandSender.spigot().sendMessage(*buildPaginationBottom(page, maxPages))
-        // ≪ Page 3/10 ≫
-
     }
 
     @Subcommand("reload")
@@ -126,9 +129,18 @@ class ExileCommand(private val handler: ExileHandler) : BaseCommand() {
         sender.sendMessage("${GREEN}Successfully reloaded the configuration for the plugin")
     }
 
+    @Subcommand("location")
+    @CommandPermission("exile.admin")
+    @Description("Sets the location that new exiles are exiled to")
+    fun setLocation(sender: Player) {
+        val loc = sender.location
+        handler.setExileLocation(loc)
+        sender.sendMessage("${GREEN}The target exile location has now been set to ${MMExilesConfig.exileLocation}")
+    }
+
     private fun buildPaginationBottom(page: Int, maxPage: Int): Array<BaseComponent> {
         val componentBuilder = ComponentBuilder()
-        if (page == 0) {
+        if (page == 1) {
             componentBuilder.append("≪ ").color(MD5Color.GRAY)
         } else {
             val component = TextComponent("≪")

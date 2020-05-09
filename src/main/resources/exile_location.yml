@@ -1,0 +1,7 @@
+# A file that's dedicated to tracking the recorded exile location. Separate from the config because this is updated by the plugin.
+# /exile reload to load any changes.
+
+x: 0
+y: 128
+z: 0
+world: world
