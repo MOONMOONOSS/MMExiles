@@ -6,7 +6,7 @@
 
     <groupId>io.github.war501head</groupId>
     <artifactId>MoonMoonExiles</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MMExiles</name>
