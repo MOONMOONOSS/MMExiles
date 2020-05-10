@@ -46,6 +46,7 @@ class ExileCommand(private val handler: ExileHandler) : BaseCommand() {
     fun requestExile(commandSender: CommandSender, player: OnlinePlayer, reason: String) {
         if (commandSender.hasPermission("exile.admin")) {
             handler.doExile(player.player, (commandSender as? Player)?.name ?: "Console", reason)
+            commandSender.sendMessage("${RED}You have exiled ${player.player.name}! May fate be kind to their poor soul...")
         } else {
             when (handler.requestExile(commandSender as Player, player.player, reason)) {
                 ExileHandler.Status.PENDING_EXILE -> commandSender.sendMessage("$RED[Error]$GRAY That player already has an outstanding request for exile")
