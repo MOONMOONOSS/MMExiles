@@ -28,8 +28,11 @@ import org.bukkit.Bukkit
 import org.bukkit.configuration.InvalidConfigurationException
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
+import java.util.logging.Logger
 
 object MMExilesConfig {
+
+    val log = Logger.getLogger(MMExilesConfig.javaClass.simpleName)
 
     var plugin: MMExiles? = null
         internal set
@@ -58,8 +61,11 @@ object MMExilesConfig {
             plugin!!.saveResource("exile_location.yml", false)
         }
         val exileLocationConfig = YamlConfiguration.loadConfiguration(exileLocationFile)
-        val y = exileLocationConfig.getInt("y")
-        if (!(0..256).contains(y)) throw InvalidConfigurationException("The y coordinate for the exile location must be between 0 and 256. Specified: $y")
+        var y = exileLocationConfig.getInt("y")
+        if (!(0..256).contains(y)) {
+            log.warning("The specified y coordinate for the exile location is $y, which is outside of the range 0 - 256! We'll clamp but please correct this value!")
+            y = y.coerceIn(0..256)
+        }
         val x = exileLocationConfig.getInt("x")
         val z = exileLocationConfig.getInt("z")
         val world = exileLocationConfig.getString("world")
@@ -76,7 +82,7 @@ object MMExilesConfig {
         val locationConfigFile = File(plugin!!.dataFolder, "exile_location.yml")
         val exileLocationConfig = YamlConfiguration.loadConfiguration(locationConfigFile)
         exileLocationConfig.set("x", x)
-        exileLocationConfig.set("y", y)
+        exileLocationConfig.set("y", y.coerceIn(0..256))
         exileLocationConfig.set("z", z)
         exileLocationConfig.set("world", world)
         exileLocationConfig.save(locationConfigFile)

@@ -31,6 +31,7 @@ class MMExiles : JavaPlugin() {
 
     override fun onEnable() {
         // Plugin startup logic
+        logger
         saveDefaultConfig()
         MMExilesConfig.plugin = this
         MMExilesConfig.loadConfig()
